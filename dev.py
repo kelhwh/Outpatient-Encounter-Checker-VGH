@@ -16,7 +16,7 @@ class App():
         return
 
     def run(self, test_run=False):
-        print(figlet_format('VGHTPE\nRO', font='3-d'))
+        print(figlet_format('VGHTPE\nRadOnc', font='3-d'))
         print("This app helps you check whether the patients who've booked appointments on the given day are new to RO.")
 
         USERNAME = input('Web9 Username:')
@@ -30,7 +30,10 @@ class App():
 
         # Initialize chromedriver
         print("Starting...")
-        driver = webdriver.Chrome('chromedriver')
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless') #With browser hidden
+        options.add_argument('log-level=3') #Show only fatal message
+        driver = webdriver.Chrome('chromedriver', options=options)
 
         # Login
         print("Logging in...")
@@ -79,4 +82,4 @@ class App():
 
 if __name__ == "__main__":
     app = App()
-    app.run()
+    app.run(test_run=False)

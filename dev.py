@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from pyfiglet import figlet_format
 from patient import Patient
 from verification import (verify_length_strict, verify_date)
+from cli_tool import verified_input
 
 URL_LOGIN = 'https://eip.vghtpe.gov.tw/login.php'
 URL_REGISTRATION = 'https://web9.vghtpe.gov.tw/emr/qemr/qemr.cfm?action=findReg'
@@ -19,14 +20,11 @@ class App():
         print(figlet_format('VGHTPE\nRadOnc', font='3-d'))
         print("This app helps you check whether the patients who've booked appointments on the given day are new to RO.")
 
-        USERNAME = input('Web9 Username:')
+        USERNAME = verified_input('Web9 Username:', verify_length_strict, expected_len=8)
         PASSWORD = getpass.getpass('Password: ')
-        OPD_DATE = input('Date (ex.20230220): ')
-        verify_date(OPD_DATE)
-        OPD_NO = input('OPD Code (ex. 042): ')
-        verify_length_strict(OPD_NO, 3)
-        OPD_ROOM = input('OPD Room (ex. 17): ')
-        verify_length_strict(OPD_ROOM, 2)
+        OPD_DATE = verified_input('Date (ex.20230220): ', verify_date)
+        OPD_NO = verified_input('OPD Code (ex. 042): ', verify_length_strict, expected_len=3)
+        OPD_ROOM = verified_input('OPD Room (ex. 17): ', verify_length_strict, expected_len=2)
 
         # Initialize chromedriver
         print("Starting...")

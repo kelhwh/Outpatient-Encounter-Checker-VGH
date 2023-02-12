@@ -1,11 +1,11 @@
 import time
 
 def verify_length_strict(input, expected_len):
-    if len(input) != expected_len:
-        print("Input length is expected to be {} but get {}!".format(expected_len, len(input)))
+    if len(input) == expected_len:
         return True
     else:
-        return True
+        print("Input length is expected to be {} but get {}!".format(expected_len, len(input)))
+        return False
 
 def verify_date(input):
     try:

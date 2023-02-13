@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from pyfiglet import figlet_format
 from patient import Patient
 from verification import (verify_length_strict, verify_date)
-from cli_tool import (verified_input, exit_prompt)
+from cli_tool import (verified_input, exit_prompt, restart_prompt)
 
 URL_LOGIN = 'https://eip.vghtpe.gov.tw/login.php'
 URL_REGISTRATION = 'https://web9.vghtpe.gov.tw/emr/qemr/qemr.cfm?action=findReg'
@@ -48,7 +48,7 @@ class App():
         time.sleep(2)
 
         if driver.find_element(By.ID, 'login_name'):
-            exit_prompt("Login failed. Please recheck ")
+            restart_prompt(self.run, "Login failed. Please recheck ")
         else:
             pass
 

@@ -6,10 +6,16 @@ def verified_input(prompt, verification, **kwargs):
         verified = verification(var, **kwargs)
 
     return var
-def exit_prompt(self, message=None):
+def exit_prompt(message=None):
     print(message)
-    input("Press ENTER to leave")
+    input("Press ENTER to leave.")
     exit()
+
+def restart_prompt(run_fun, message=None):
+    print(message)
+    input("Press ENTER to restart.")
+    run_fun()
+
 
 if __name__ == '__main__':
     from verification import verify_date

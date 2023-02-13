@@ -64,12 +64,16 @@ class App():
         num_new_patient = 0
         for id in patient_list:
             p = Patient(patient_id=id)
-            has_opd, opd = p.has_opd(driver, ['0RR', '0RA', '042', '142'])
-            if has_opd:
-                print("{} has recent appointment with {} on {}.".format(id, opd['門診醫師'],opd['門診日期']))
-            elif not has_opd:
-                num_new_patient += 1
-                print("NEW!! {} has no recent RO appointment history.".format(id))
+
+            try:
+                has_opd, opd = p.has_opd(driver, ['0RR', '0RA', '042', '142'])
+                if has_opd:
+                    print("{} has recent appointment with {} on {}.".format(id, opd['門診醫師'],opd['門診日期']))
+                elif not has_opd:
+                    num_new_patient += 1
+                    print("NEW!! {} has no recent RO appointment history.".format(id))
+            except ValueError:
+                print("Fail to retrieve opd list for {}".format(id))
             time.sleep(1)
 
         driver.close()

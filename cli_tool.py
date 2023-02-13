@@ -6,6 +6,10 @@ def verified_input(prompt, verification, **kwargs):
         verified = verification(var, **kwargs)
 
     return var
+def exit_prompt(self, message=None):
+    print(message)
+    input("Press ENTER to leave")
+    exit()
 
 if __name__ == '__main__':
     from verification import verify_date

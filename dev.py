@@ -3,10 +3,11 @@ import pandas as pd
 import getpass
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 from pyfiglet import figlet_format
 from patient import Patient
 from verification import (verify_length_strict, verify_date)
-from cli_tool import verified_input
+from cli_tool import (verified_input, exit_prompt)
 
 URL_LOGIN = 'https://eip.vghtpe.gov.tw/login.php'
 URL_REGISTRATION = 'https://web9.vghtpe.gov.tw/emr/qemr/qemr.cfm?action=findReg'
@@ -46,6 +47,11 @@ class App():
         login_button.click()
         time.sleep(2)
 
+        if driver.find_element(By.ID, 'login_name'):
+            exit_prompt("Login failed. Please recheck ")
+        else:
+            pass
+
         print("Checking patients on {} for OPD:{} Room:{}...".format(OPD_DATE, OPD_NO, OPD_ROOM))
         driver.get(URL_REGISTRATION + '&dt={}&ect={}&room={}'.format(OPD_DATE, OPD_NO, OPD_ROOM))
         time.sleep(2)
@@ -54,7 +60,7 @@ class App():
         patient_list = patient_df['病歷號']
 
         if len(patient_list)==0 or patient_list[0]=='無資料':
-            return print("No patients on {}.".format(OPD_DATE))
+            exit_prompt("No patients on {}.".format(OPD_DATE))
 
         if test_run:
             patient_list = patient_list[:1]
@@ -79,8 +85,9 @@ class App():
         driver.close()
 
         print("A total of {} patients, with {} new patients on {}.".format(len(patient_list), num_new_patient, OPD_DATE))
-        print("-"*10 + "Finished" + "-"*10)
-        input("Press ENTER to leave")
+        exit_prompt("-" * 10 + "Finished" + "-" * 10)
+
+
 
 if __name__ == "__main__":
     app = App()

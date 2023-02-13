@@ -68,6 +68,7 @@ class App():
         driver.get(URL_EMR + '&histno={}'.format(str(patient_list[0]))) # Visit the EMR homepage first to avoid error
 
         num_new_patient = 0
+        failed_patient = 0
         for id in patient_list:
             p = Patient(patient_id=id)
 
@@ -79,12 +80,13 @@ class App():
                     num_new_patient += 1
                     print("NEW!! {} has no recent RO appointment history.".format(id))
             except ValueError:
+                fail+=1
                 print("Fail to retrieve opd list for {}".format(id))
             time.sleep(1)
 
         driver.close()
 
-        print("A total of {} patients, with {} new patients on {}.".format(len(patient_list), num_new_patient, OPD_DATE))
+        print("A total of {} patients, with {} new patients on {}. Failed to retrieve {} patients.".format(len(patient_list), num_new_patient, OPD_DATE, failed_patient))
         exit_prompt("-" * 10 + "Finished" + "-" * 10)
 
 

@@ -15,7 +15,7 @@ class Patient():
             driver.get(url_opd)
             opd_html = driver.find_element(By.ID, 'opdlist').get_attribute('outerHTML')
         except:
-            return print("Fail to retrieve opd list for {}".format(self.id))
+            raise ValueError("Fail to retrieve opd list for {}".format(self.id))
 
         opd_df = pd.read_html(opd_html, flavor='html5lib')[0]
         for i in range(opd_df.shape[0]):

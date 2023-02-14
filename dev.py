@@ -47,7 +47,7 @@ class App():
         login_button.click()
         time.sleep(2)
 
-        if driver.find_element(By.ID, 'login_name'):
+        if driver.current_url == URL_LOGIN:
             restart_prompt(self.run, "Login failed. Please recheck ")
         else:
             pass
@@ -80,7 +80,7 @@ class App():
                     num_new_patient += 1
                     print("NEW!! {} has no recent RO appointment history.".format(id))
             except ValueError:
-                fail+=1
+                failed_patient+=1
                 print("Fail to retrieve opd list for {}".format(id))
             time.sleep(1)
 

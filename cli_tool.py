@@ -1,4 +1,4 @@
-
+import sys
 def verified_input(prompt, verification, **kwargs):
     verified = False
     while not verified:
@@ -9,7 +9,7 @@ def verified_input(prompt, verification, **kwargs):
 def exit_prompt(message=None):
     print(message)
     input("Press ENTER to leave.")
-    exit()
+    sys.exit()
 
 def restart_prompt(run_fun, message=None):
     print(message)

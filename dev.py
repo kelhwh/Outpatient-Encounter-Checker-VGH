@@ -82,10 +82,10 @@ class App():
             except ValueError:
                 failed_patient+=1
                 print("Fail to retrieve opd list for {}".format(id))
+
             time.sleep(1)
 
         driver.close()
-
         print("A total of {} patients, with {} new patients on {}. Failed to retrieve {} patients.".format(len(patient_list), num_new_patient, OPD_DATE, failed_patient))
         exit_prompt("-" * 10 + "Finished" + "-" * 10)
 
